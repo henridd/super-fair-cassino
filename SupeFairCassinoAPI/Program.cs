@@ -17,7 +17,7 @@ if (app.Environment.IsDevelopment())
     app.UseAllElasticApm(app.Configuration);
 }
 
-app.MapGet("/GetBetResult", IResult () =>
+app.MapGet("/Bet", IResult () =>
 {
     if (ShouldWin())
     {
@@ -32,7 +32,7 @@ app.MapGet("/GetBetResult", IResult () =>
         return new Random().Next(0, 10) > 5;
     }
 })
-.WithName("GetBetResult")
+.WithName("Bet")
 .WithOpenApi();
 
 app.Run();
