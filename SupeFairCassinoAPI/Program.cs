@@ -1,4 +1,6 @@
 using Elastic.Apm.NetCoreAll;
+using Microsoft.AspNetCore.Mvc;
+using SuperFairCassinoAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +19,7 @@ if (app.Environment.IsDevelopment())
     app.UseAllElasticApm(app.Configuration);
 }
 
-app.MapGet("/Bet", IResult () =>
+app.MapGet("/Bet", IResult ([FromQuery] Game game = Game.Blackjack) =>
 {
     if (ShouldWin())
     {
@@ -25,7 +27,7 @@ app.MapGet("/Bet", IResult () =>
         throw new Exception("Whoops! Something went wrong with the request. Please try again.");
     }
 
-    return Results.Ok("Sorry! You didn't win, please bet again!");
+    return Results.Ok($"Sorry! You didn't win your {game} game, please bet again!");
 
     bool ShouldWin()
     {
